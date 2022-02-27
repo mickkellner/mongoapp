@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+<div class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-6">
+                {{ form_start(form, {'action': path('app_register'), 'method': 'POST'}) }}
+                    {{ form_widget(form) }}
+                            
+                    <input type="submit" />
+
+                {{ form_end(form) }}
+            
+            </div>
+            <div class="col"></div>
+        </div>
+</div>
+
+{% endblock %}
+
+

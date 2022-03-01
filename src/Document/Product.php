@@ -3,7 +3,10 @@ namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
-/** @MongoDB\Document(collection="products", repositoryClass="App\Repository\ProductRepository") */
+/** 
+ * @MongoDB\Document(db="myapp", collection="products", repositoryClass="App\Repository\ProductRepository") 
+ * 
+*/
 class Product 
 {
     /** @MongoDB\Id */

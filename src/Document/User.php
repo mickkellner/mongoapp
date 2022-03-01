@@ -2,6 +2,7 @@
 
 namespace App\Document;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
@@ -10,7 +11,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 
 /**
- * @MongoDB\Document(collection="users", repositoryClass="App\Repository\UserRepository")
+ * @MongoDB\Document(db="myapp", collection="users", repositoryClass="App\Repository\UserRepository")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -32,9 +33,50 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /** @MongoDB\Field(type="string") */
     private $company;
 
-    
+    /**
+     * @MongoDB\ReferenceMany(targetDocument=Product::class, orphanRemoval=true, cascade={"persist"})
+     */
+    private $products = [];
 
-   
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param Product $product
+     * @return void
+     */
+    public function addProduct(Product $product): void
+    {
+        $this->products->add($product);        
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $element
+     * @return void
+     */
+    public function removeProduct($element): void
+    {
+        $this->products->removeElement($element);
+    }
+    
+    /**
+     * Undocumented function
+     *
+     * @return ArrayCollection
+     */
+    public function getProducts(): ArrayCollection
+    {
+        return $this->products;
+    }
+
+
     public function setCompany(string $companyName): self { $this->company = $companyName; return $this; }
 
     public function getCompany(): ?string { return $this->company; }

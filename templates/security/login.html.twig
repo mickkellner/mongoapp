@@ -5,8 +5,9 @@
 {% block body %}
 
 <div class="row">
+   <div class="col"></div>
      <div class="col"></div>
-            <div class="col-6">
+            <div class="col-3">
                <form method="post">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -45,7 +46,8 @@
 </form> 
             
             </div>
-            <div class="col"></div>         
+            <div class="col"></div>
+        <div class="col"></div>          
 </div>
 
 {% endblock %}

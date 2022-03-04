@@ -9,8 +9,11 @@
 
         <div class="col"></div>
 
-        <div class="col-4">
-            {{ form(form) }}
+        <div class="col-7">         
+                                           
+            {{ include('_includes/product.html.twig') }}
+           {#  {{ user.email }}
+             {{ user.products }} #}
         </div>
 
         <div class="col"></div>

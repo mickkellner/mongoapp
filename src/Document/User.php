@@ -6,9 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-
-
-
+use Symfony\Component\Form\ChoiceList\ArrayChoiceList;
 
 /**
  * @MongoDB\Document(db="myapp", collection="users", repositoryClass="App\Repository\UserRepository")
@@ -69,11 +67,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * Undocumented function
      *
-     * @return ArrayCollection
+     * @return Product
      */
-    public function getProducts(): ArrayCollection
+    public function getProducts(): Array
     {
-        return $this->products;
+        return $this->products->toArray();
     }
 
 

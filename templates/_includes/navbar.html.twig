@@ -19,19 +19,20 @@
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
+            Menü
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href={{ path('product_add')}}>Produkt anlegen</a></li>
-            <li><a class="dropdown-item" href="#">Aktion 2</a></li>
-            <li><a class="dropdown-item" href="#">Aktion 3</a></li>
+            <li><a class="dropdown-item" href={{ path('product_show')}}>Meine Produkte</a></li>
+            <li><a class="dropdown-item" href="#">Mein Profil</a></li>
           </ul>
         </li>
-      </ul>      
+      </ul>
+          <a class="nav-link" href="#">{{ app.user.email }}</a>      
           <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>      
    {%endif%}       
        {%if not is_granted('IS_AUTHENTICATED_FULLY')%}
-       <form class="d-flex">
+       <form class="d-flex">          <a
           <a class="nav-link" href="{{ path('app_register') }}">Register</a>
       </form>
      {%endif%}

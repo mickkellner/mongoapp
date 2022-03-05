@@ -10,7 +10,8 @@
         <td>{{product.name}}</td>
         <td>{{ product.cover}}</td>
         <td>{{ product.price }}</td>
-        <td><a class="nav-link" href={{ path('product_delete')}} name="id" value={{ product.id }}>Löschen</a></td>
+        <td><a href="#">Ändern</a>
+            <a href="{{path('product_delete', {productId: product.id})}}">Löschen</a></td>
     </tr>
     
   {% endfor %}  

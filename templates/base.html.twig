@@ -12,10 +12,28 @@
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
+        
+
     </head>
     <body class="text-white bg-dark">
+      
         {% block body %}
+            <div class="container margin-top="30px">
+
+                    {# read and display all flash messages #}
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="flash-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}       
+
+
+
             
+            </div>
         {% endblock %}
+        
     </body>
 </html>

@@ -7,6 +7,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Form\ChoiceList\ArrayChoiceList;
+use Symfony\Component\HttpKernel\DependencyInjection\RemoveEmptyControllerArgumentLocatorsPass;
 
 /**
  * @MongoDB\Document(db="myapp", collection="users", repositoryClass="App\Repository\UserRepository")
@@ -32,7 +33,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $company;
 
     /**
-     * @MongoDB\ReferenceMany(targetDocument=Product::class, orphanRemoval=true, cascade={"persist"})
+     * @MongoDB\ReferenceMany(targetDocument=Product::class, orphanRemoval=true, cascade={"all"})
      */
     private $products = [];
 
@@ -53,15 +54,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->products->add($product);        
     }
 
-    /**
-     * Undocumented function
-     *
-     * @param [type] $element
-     * @return void
-     */
-    public function removeProduct($element): void
+    
+    public function removeProduct(Product $product): void
     {
-        $this->products->removeElement($element);
+        $this->products->removeElement($product);
+        
     }
     
     /**
@@ -75,6 +72,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
 
+    public function getProductById($id): Product
+    {
+        foreach($this->products as $product)
+        {
+            if($id == $product->getId() )
+            {
+                return $product;
+            }
+        }
+    }
+
+   
     public function setCompany(string $companyName): self { $this->company = $companyName; return $this; }
 
     public function getCompany(): ?string { return $this->company; }
@@ -91,6 +100,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @see UserInterface
      */
     public function getUserIdentifier(): string { return (string) $this->email; }
+
+
+    /**
+     * Undocumented function
+     *
+     * @return string
+     */
+    public function getUsername(): string { return $this->email; }
 
     /**
      * @see UserInterface

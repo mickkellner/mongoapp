@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello   {{ app.user.email}}       {% endblock %}
+{% block title %}{% endblock %}
 
 {% block body %}
 
@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col"></div>
             <div class="col-6">
-               <h1>Hello {{ app.user.email }}! ✅</h1>
+               <h1>Hello {{ app.user.username }}! ✅</h1>
 
                     This friendly message is coming from:
                     <ul>

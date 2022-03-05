@@ -11,7 +11,7 @@ class ProductRepository extends DocumentRepository
     
     public function __construct(DocumentManager $dm)
     {
-        $dm = $this->dm;
+        $this->dm = $dm;
     }
     
     
@@ -24,7 +24,7 @@ class ProductRepository extends DocumentRepository
      */
     public function findOneProductById($id)
     {
-        return $dm->find(Product::class, $id);
+        return $this->dm->find(Product::class, $id);
     }
 
     /**
@@ -35,6 +35,6 @@ class ProductRepository extends DocumentRepository
      */
     public function deleteProduct($id)
     {
-        $dm->
+        
     }
 }

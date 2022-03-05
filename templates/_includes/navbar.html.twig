@@ -23,7 +23,7 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href={{ path('product_add')}}>Produkt anlegen</a></li>
-            <li><a class="dropdown-item" href={{ path('product_show')}}>Meine Produkte</a></li>
+            <li><a class="dropdown-item" href={{ path('product_list')}}>Meine Produkte</a></li>
             <li><a class="dropdown-item" href="#">Mein Profil</a></li>
           </ul>
         </li>
@@ -32,7 +32,7 @@
           <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>      
    {%endif%}       
        {%if not is_granted('IS_AUTHENTICATED_FULLY')%}
-       <form class="d-flex">          <a
+       <form class="d-flex">          
           <a class="nav-link" href="{{ path('app_register') }}">Register</a>
       </form>
      {%endif%}

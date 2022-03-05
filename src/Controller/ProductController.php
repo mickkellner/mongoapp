@@ -13,10 +13,17 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
 
+
 class ProductController extends AbstractController
 {
+    
+    
+    
+    
+    
+    
     #[Route('/product/add', name: 'product_add')]
-    public function addProduct(DocumentManager $dm, Request $request, RequestStack $requestStack): Response
+    public function add(DocumentManager $dm, Request $request, RequestStack $requestStack): Response
     {
         $form = $this->createForm(ProductType::class, new Product());
 
@@ -37,26 +44,25 @@ class ProductController extends AbstractController
             $dm->persist( $product );
             
             $dm->flush();
-            return $this->redirect('/home');
+            return $this->redirectToRoute('product_list');
         }
         
         return $this->render('product/index.html.twig', [
-            'controller_name' => 'ProductController',
-            'form' => $form->createView(),
 
+            'form' => $form->createView(),
         ]);
     }
 
-    #[Route('/product/show', name: 'product_show')]
-    public function showProducts(DocumentManager $dm, RequestStack $requestStack): Response
+    #[Route('/product/list', name: 'product_list')]
+    public function list(DocumentManager $dm, RequestStack $requestStack): Response
     {
         $session = $requestStack->getSession();
         $email = $session->get('_security.last_username');
         $user = $dm->getRepository(User::class)->findOneBy(['email' => $email]);
         $products = $user->getProducts();
-        
+        $dm->clear();
                 
-        return $this->render('/product/show.html.twig', [           
+        return $this->render('/product/list.html.twig', [           
             'products' => $products,
         ]);
     }
@@ -64,18 +70,22 @@ class ProductController extends AbstractController
 
 
 
-    #[Route('/product/delete/{$id}', name: 'product_delete')]
-    public function deleteProduct(DocumentManager $dm, $id): Response
+    #[Route('/product/delete/{productId}', name: 'product_delete')]
+    public function delete(DocumentManager $dm, $productId, RequestStack $requestStack): Response
     {
-        try {
-            $dm->getRepository(Product::class)->delete(['id' => $id]);
-        }catch(MongoDBException $e) {
-            return $e->getMessage();
-        }
-        
-        
-        return $this->render('/product/show.html.twig', [           
-        
+        $session = $requestStack->getSession();
+        $email = $session->get('_security.last_username');
+        $user = $dm->getRepository(User::class)->findOneBy(['email' => $email]);        
+        $product = $user->getProductById($productId);
+        $user->removeProduct($product);
+        $dm->persist($user);     
+        $dm->flush();
+        $products = $user->getProducts();
+
+        $this->addFlash( 'notice', 'Das Produkt wurde gelöscht!' );
+
+        return $this->render('/product/list.html.twig', [
+            'products' => $products,
         ]);
     }
 

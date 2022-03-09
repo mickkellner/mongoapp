@@ -1,6 +1,7 @@
 <?php
 namespace App\Repository;
 
+use App\Document\User;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
@@ -18,7 +19,7 @@ class UserRepository extends DocumentRepository implements UserLoaderInterface
      */
     public function loadUserByIdentifier(string $email): ?UserInterface
     {
-       $user = $this->getDocumentManagaer->createQueryBuilder(User::class)
+       $user = $this->dm->createQueryBuilder(User::class)
             ->field('email')->equals($email)
             ->getQuery()
             ->execute();

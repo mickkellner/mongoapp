@@ -33,6 +33,9 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
         // it is whatever value is being returned by the getUserIdentifier()
         // method in your User class.
         //throw new \Exception('TODO: fill in loadUserByIdentifier() inside '.__FILE__);
+        $user = new User();
+        $user->setEmail($identifier);
+        return $user;
     }
 
     /**

@@ -1,0 +1,28 @@
+
+ <table class="table table-dark table-hover">
+    <tr>
+        <th>Name</th>
+        <th>Cover</th>
+        <th>Preis</th>
+        <th>Aktionen</th> 
+    </tr>
+    {% for product in products %}
+    <tr id="product">
+        <td id="name">{{product.name}}</td>
+        <td id="cover">{{ product.cover}}</td>
+        <td id="price">{{ product.price }}</td>
+        <td>
+          <input type="hidden" id="productId" value="{{product.id}}"/>                           
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal">
+          Bearbeiten
+          </button>          
+          <a href="{{ path('product_delete', {productId: product.id})}}" class="btn btn-primary">Löschen</a>          
+        </td>
+    </tr>    
+  {% endfor %}
+  <!-- Modal -->
+<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+ {{ include('_includes/modal.html.twig') }}
+</div> 
+    
+</table> 

@@ -43,44 +43,43 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->products = new ArrayCollection();
     }
 
-    /**
-     * Undocumented function
-     *
-     * @param Product $product
-     * @return void
-     */
+    /** Add a Product to the Products ArrayCollection */
     public function addProduct(Product $product): void
     {
-        $this->products->add($product);        
+        if(!$this->products->contains($product) )
+        {
+            $this->products->add($product);
+        }   
     }
 
-    
+    /** Remove a Product from the ArrayCollection */
     public function removeProduct(Product $product): void
     {
-        $this->products->removeElement($product);
-        
+        if($this->products->contains($product))
+        {
+            $this->products->removeElement($product);
+        }
     }
     
-    /**
-     * Undocumented function
-     *
-     * @return Product
-     */
+    /** Get all the products related to the User as an Array */
     public function getProducts(): Array
     {
         return $this->products->toArray();
     }
 
 
-    public function getProductById($id): Product
+    /** Find a product by it's id */
+    public function getProductById(string $id): Product
     {
+        $product = new Product();
         foreach($this->products as $product)
         {
             if($id == $product->getId() )
             {
-                return $product;
+                $this->product = $product;
             }
         }
+        return $this->product;
     }
 
    
@@ -88,6 +87,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getCompany(): ?string { return $this->company; }
 
+    public function setId($id): self { $this->id = $id; return $this; }
+    
     public function getId(): ?string { return $this->id; }
 
     public function getEmail(): ?string { return $this->email; }
@@ -118,7 +119,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @see PasswordAuthenticatedUserInterface
-     * @return the hashed password as a string
+     * @return string password
      */
     public function getPassword(): string { return $this->password; }
 

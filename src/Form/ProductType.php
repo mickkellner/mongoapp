@@ -16,7 +16,7 @@ class ProductType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('name', TextType::class)
+        $builder->add('name', TextType::class, )
                 ->add('cover', FileType::class, [
                     'label' => 'Coverbild hochladen',
                     'mapped' => false,

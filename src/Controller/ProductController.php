@@ -80,13 +80,33 @@ class ProductController extends AbstractController
         $user->removeProduct($product);
         $dm->persist($user);     
         $dm->flush();
+        $this->addFlash( 'notice', 'Das Produkt wurde entgültig gelöscht und kann nicht wieder hergestellt werden!' );
         $products = $user->getProducts();
 
-        $this->addFlash( 'notice', 'Das Produkt wurde gelöscht!' );
+
 
         return $this->render('/product/list.html.twig', [
             'products' => $products,
         ]);
+    }
+
+
+    #[Route('/product/edit/{productId}', name: 'product_edit')]
+    public function edit(DocumentManager $dm, $productId, RequestStack $requestStack)
+    {
+        $session = $requestStack->getSession();
+        $email = $session->get('_security.last_username');
+        $user = $dm->getRepository(User::class)->findOneBy(['email' => $email]);        
+        $product = $user->getProductById($productId);
+        
+        dd($product);
+
+
+
+        /* return $this->render('product/index.html.twig', [
+            'form' => $form->createView(),
+        ]); */
+
     }
 
 

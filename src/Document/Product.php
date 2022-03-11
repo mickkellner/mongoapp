@@ -22,7 +22,7 @@ class Product
     protected $price;
 
     
-    
+    public function setId($id): self { $this->id = $id; return $this;}
 
     public function getId() { return $this->id; }
 

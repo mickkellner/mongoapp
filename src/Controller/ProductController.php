@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Document\Product;
 use App\Form\ProductType;
 use App\Document\User;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,51 +15,42 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
 
 
-class ProductController extends AbstractController
-{
-    
-    
-    
-    
-    
+class ProductController extends AbstractController   
+{    
     
     #[Route('/product/add', name: 'product_add')]
-    public function add(DocumentManager $dm, Request $request, RequestStack $requestStack): Response
+    public function add(DocumentManager $dm, Request $request): Response
     {
         $form = $this->createForm(ProductType::class, new Product());
 
-        $form->handleRequest($request);
-        
-        $session = $requestStack->getSession();
-        $email = $session->get('_security.last_username');
+        $form->handleRequest($request);        
+        $user = $this->getUser();
+        $product = new Product();
        
          if ($form->isSubmitted() && $form->isValid()) {    
                                 
-            $product = $form->getData();           
-            
-            $user = $dm->getRepository(User::class)->findOneBy(['email' => $email]); 
+            $product = $form->getData();                 
                    
             $user->addProduct($product);
                        
             $dm->persist($user);
-            $dm->persist( $product );
-            
+            $dm->persist( $product );            
             $dm->flush();
+            $dm->clear();
             return $this->redirectToRoute('product_list');
         }
         
         return $this->render('product/index.html.twig', [
-
+             'product' => $product,
             'form' => $form->createView(),
         ]);
     }
 
     #[Route('/product/list', name: 'product_list')]
-    public function list(DocumentManager $dm, RequestStack $requestStack): Response
+    public function list(DocumentManager $dm): Response
     {
-        $session = $requestStack->getSession();
-        $email = $session->get('_security.last_username');
-        $user = $dm->getRepository(User::class)->findOneBy(['email' => $email]);
+        $user = $this->getUser();
+        
         $products = $user->getProducts();
         $dm->clear();
                 
@@ -71,19 +63,15 @@ class ProductController extends AbstractController
 
 
     #[Route('/product/delete/{productId}', name: 'product_delete')]
-    public function delete(DocumentManager $dm, $productId, RequestStack $requestStack): Response
+    public function delete(DocumentManager $dm, $productId): Response
     {
-        $session = $requestStack->getSession();
-        $email = $session->get('_security.last_username');
-        $user = $dm->getRepository(User::class)->findOneBy(['email' => $email]);        
+        $user = $this->getUser();   
         $product = $user->getProductById($productId);
         $user->removeProduct($product);
         $dm->persist($user);     
         $dm->flush();
         $this->addFlash( 'notice', 'Das Produkt wurde entgültig gelöscht und kann nicht wieder hergestellt werden!' );
         $products = $user->getProducts();
-
-
 
         return $this->render('/product/list.html.twig', [
             'products' => $products,
@@ -92,20 +80,31 @@ class ProductController extends AbstractController
 
 
     #[Route('/product/edit/{productId}', name: 'product_edit')]
-    public function edit(DocumentManager $dm, $productId, RequestStack $requestStack)
+    public function edit($productId, DocumentManager $dm, Request $request): Response
     {
-        $session = $requestStack->getSession();
-        $email = $session->get('_security.last_username');
-        $user = $dm->getRepository(User::class)->findOneBy(['email' => $email]);        
+        $user = $this->getUser();    
         $product = $user->getProductById($productId);
+
+        $form = $this->createForm(ProductType::class);
+        $form->handleRequest($request);
+                
+       
+         if ($form->isSubmitted() && $form->isValid()) {    
+                                
+            $product = $form->getData();
+            $product->setId($productId);
+            $dm->persist($product);
+            $dm->flush();
+            return $this->redirectToRoute('product_list'); 
+        }
         
-        dd($product);
-
-
-
-        /* return $this->render('product/index.html.twig', [
+        return $this->render('product/index.html.twig', [
+            'product' => $product,
             'form' => $form->createView(),
-        ]); */
+        ]);
+
+
+        
 
     }
 

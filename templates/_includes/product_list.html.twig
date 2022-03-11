@@ -7,22 +7,25 @@
         <th>Aktionen</th> 
     </tr>
     {% for product in products %}
-    <tr id="product">
-        <td id="name">{{product.name}}</td>
-        <td id="cover">{{ product.cover}}</td>
-        <td id="price">{{ product.price }}</td>
-        <td>
-          <input type="hidden" id="productId" value="{{product.id}}"/>                           
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal">
-          Bearbeiten
-          </button>          
-          <a href="{{ path('product_delete', {productId: product.id})}}" class="btn btn-primary">Löschen</a>          
-        </td>
-    </tr>    
+      <form id="product_form" class="form-control" action="{{ path('product_edit', {productId: product.id })}}">
+       
+              <tr>
+              <td id="name" value="{{product.name}}">{{product.name}}</td>
+              <td id="name" value="{{product.cover}}">{{product.cover}}</td>
+              <td id="name" value="{{product.price}}">{{product.price}}</td>
+              <td>
+                <input type="hidden" id="productId" value="{{product.id}}"/>                           
+                <input type="submit" id="submit" value="Ändern" class="btn btn-primary">
+                </td>     
+      </form>
+                <td>
+                  <a href="{{ path('product_delete', {productId: product.id})}}" class="btn btn-primary">Löschen</a>
+                </td>          
+              
+          </tr>
+       
+    
   {% endfor %}
-  <!-- Modal -->
-<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
- {{ include('_includes/modal.html.twig') }}
-</div> 
+ 
     
 </table> 

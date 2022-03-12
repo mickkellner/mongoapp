@@ -2,24 +2,27 @@
 
 namespace App\Controller;
 
+use App\Document\User;
 use App\Document\Product;
 use App\Form\ProductType;
-use App\Document\User;
-use Symfony\Component\Security\Core\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Routing\Annotation\Route;
+use App\Service\FileUploader;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 
 class ProductController extends AbstractController   
 {    
     
     #[Route('/product/add', name: 'product_add')]
-    public function add(DocumentManager $dm, Request $request): Response
+    public function add(DocumentManager $dm, Request $request, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(ProductType::class, new Product());
 
@@ -29,16 +32,27 @@ class ProductController extends AbstractController
        
          if ($form->isSubmitted() && $form->isValid()) {    
                                 
-            $product = $form->getData();                 
-                   
-            $user->addProduct($product);
-                       
+            $product = $form->getData();  
+            
+            /** @var UploadedFile $brochureFile */
+            $coverFile = $form->get('cover')->getData();
+
+            
+            if ($coverFile) {
+                $coverFileName = $fileUploader->upload($coverFile);
+                $product->setCover($coverFileName);
+            }else {
+                return new FileException('Das Bild konnte nicht hochgeladen werden!');
+            }
+
+            $user->addProduct($product);        
+
             $dm->persist($user);
             $dm->persist( $product );            
             $dm->flush();
             $dm->clear();
             return $this->redirectToRoute('product_list');
-        }
+        }    
         
         return $this->render('product/index.html.twig', [
              'product' => $product,
@@ -92,6 +106,8 @@ class ProductController extends AbstractController
          if ($form->isSubmitted() && $form->isValid()) {    
                                 
             $product = $form->getData();
+            //$product->setCover(new File($this->getParameter('covers_directory').'/'.$product->getCover()));
+
             $product->setId($productId);
             $dm->persist($product);
             $dm->flush();

@@ -20,17 +20,10 @@ class ProductType extends AbstractType
     {
         $builder->add('name', TextType::class, )
                 ->add('cover', FileType::class, [
-                    'label' => 'Coverbild hochladen',
-                    'mapped' => false,
-                    'required' => false,
-                    'constraints' => [ new File([
-                        'maxSize' => '5120k',
-                            'mimeTypes' => [
-                                'images/jpg',
-                                'images/jpeg',
-                            ],
-                            'mimeTypesMessage' => 'Please upload a valid Picture',     
-                        ])
+                      'label' => 'Coverbild hochladen',
+                      'mapped' => false,
+                      'required' => false,
+                      'constraints' => [ new File(['maxSize' => '5120k' ])                       
                     ],
                 ])
                 ->add('price', TextType::class, ['label' => 'Preis'])

@@ -2,16 +2,19 @@
 namespace App\Repository;
 
 use App\Document\User;
-use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
-use Doctrine\ODM\MongoDB\UnitOfWork;
-use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
+use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
+use Doctrine\Bundle\MongoDBBundle\Repository\ServiceDocumentRepository;
 
-class UserRepository extends DocumentRepository implements UserLoaderInterface
+class UserRepository extends ServiceDocumentRepository implements UserLoaderInterface
 {
     
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, User::class);
+    }
+
         
     
     /**

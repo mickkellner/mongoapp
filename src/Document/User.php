@@ -16,26 +16,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     
     /** @MongoDB\Id */
-    private $id;    
+    protected $id;    
     
     /** 
      * @MongoDB\Field(type="string")
     */
-    private $email;
+    protected $email;
 
     /** @MongoDB\Field(type="collection") */
-    private $roles = [];
+    protected $roles = [];
 
     /** @MongoDB\Field(type="string") */
-    private $password;
+    protected $password;
 
     /** @MongoDB\Field(type="string") */
-    private $company;
+    protected $company;
 
     /**
      * @MongoDB\ReferenceMany(targetDocument=Product::class, orphanRemoval=true, cascade={"all"})
      */
-    private $products = [];
+    protected $products = [];
+
+
+    /**@MongoDB\EmbedOne(targetDocument=Profile::class) */
+    protected $profile;
 
 
     public function __construct()
@@ -69,17 +73,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
 
     /** Find a product by it's id */
-    public function getProductById(string $id): Product
+    public function getProductById(string $productId): Product    
     {
-        $product = new Product();
-        foreach($this->products as $product)
+
+        foreach($this->getProducts() as $product)
         {
-            if($id == $product->getId() )
+            if($productId == $product->getId() )
             {
-                $this->product = $product;
+                return $product;
             }
         }
-        return $this->product;
     }
 
    

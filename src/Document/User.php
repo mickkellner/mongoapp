@@ -38,15 +38,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     protected $products = [];
 
 
-    /**@MongoDB\EmbedOne(targetDocument=Profile::class) */
-    protected $profile;
+    /**
+     * @MongoDB\EmbedOne(targetDocument=Profile::class) 
+     */
+    private $profile;
 
 
     public function __construct()
     {
-        $this->products = new ArrayCollection();
+        $this->products = new ArrayCollection();        
     }
 
+    /** Add additional profile data to the user is optional */
+    public function setProfile(Profile $profile): self
+    {
+        $this->profile = $profile;
+        return $this; 
+    }
+
+
+    
     /** Add a Product to the Products ArrayCollection */
     public function addProduct(Product $product): void
     {

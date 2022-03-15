@@ -2,16 +2,11 @@
 namespace App\Repository;
 
 use App\Document\Profile;
-use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
-use Doctrine\Bundle\MongoDBBundle\Repository\ServiceDocumentRepository;
+use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 
 
-class ProfileRepository extends ServiceDocumentRepository
+class ProfileRepository extends DocumentRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-       parent::__construct($registry, Profile::class);
-    }
-
+    
     
 }

@@ -2,18 +2,13 @@
 namespace App\Repository;
 
 use App\Document\User;
-use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
+use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
-use Doctrine\Bundle\MongoDBBundle\Repository\ServiceDocumentRepository;
 
-class UserRepository extends ServiceDocumentRepository implements UserLoaderInterface
+class UserRepository extends DocumentRepository implements UserLoaderInterface
 {
     
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, User::class);
-    }
 
         
     
@@ -22,7 +17,7 @@ class UserRepository extends ServiceDocumentRepository implements UserLoaderInte
      */
     public function loadUserByIdentifier(string $email): ?UserInterface
     {
-       $user = $this->dm->createQueryBuilder(User::class)
+       $user = $dm->createQueryBuilder(User::class)
             ->field('email')->equals($email)
             ->getQuery()
             ->execute();

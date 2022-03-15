@@ -32,7 +32,7 @@ class AccountController extends AbstractController
                 
                 $dm->persist( $user );
                 $dm->flush();
-                return $this->redirect('/home');
+                return $this->redirectToRoute('app_home');
             }
 
             return $this->render('account/register.html.twig', [

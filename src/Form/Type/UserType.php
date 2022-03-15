@@ -2,6 +2,7 @@
 namespace App\Form\Type;
 
 use App\Document\User;
+use App\Form\ProfileType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -22,7 +23,9 @@ class UserType extends AbstractType
            'type' => PasswordType::class
         ]);        
         $builder->add('roles', HiddenType::class, ['data' => 'ROLE_USER']);
-        $builder->add('company', TextType::class); 
+        $builder->add('company', TextType::class);
+        $builder->add('profile', ProfileType::class, ['required' => false]);
+
 
     }
 

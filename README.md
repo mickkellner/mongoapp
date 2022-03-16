@@ -8,5 +8,6 @@ Content:
 - User cann add a Product with name and price
 - Product List
 - Edit a Product
+- Add additional profile data (optional) Embedded Document used
 
 ...mor feature coming when i have the time!

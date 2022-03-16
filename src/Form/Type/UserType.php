@@ -24,7 +24,7 @@ class UserType extends AbstractType
         ]);        
         $builder->add('roles', HiddenType::class, ['data' => 'ROLE_USER']);
         $builder->add('company', TextType::class);
-        $builder->add('profile', ProfileType::class, ['required' => false]);
+        //$builder->add('profile', ProfileType::class, ['required' => false]);
 
 
     }

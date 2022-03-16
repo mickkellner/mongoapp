@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit user{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+
+        <div class="col"></div>
+
+        <div class="col">
+            <table class="table-dark">
+                <thead>                   
+                    <th>Profildaten</th>                               
+                </thead>
+                <tbody>
+                    <tr>                    
+                    <td>User</td>
+                    <td>{{ user.email }}</td>                    
+                    </tr>
+                    <tr>                    
+                    <td>Firma</td>
+                    <td>{{ user.company }}</td>                    
+                    </tr>
+                    <tr>                    
+                    <td>Vorname</td>
+                    <td>{{ user.profile.firstname }}</td>                    
+                    </tr>
+                    <tr>                    
+                    <td>Nachname</td>
+                    <td>{{ user.profile.lastname }}</td>                    
+                    </tr>
+                    <tr>                    
+                    <td>2. Email</td>
+                    <td>{{ user.profile.secondEmail }}</td>                    
+                    </tr>                    
+                </tbody>
+                </table>
+        </div>            
+
+        <div class="col"></div>
+
+    </div>
+</div>
+
+{% endblock %}

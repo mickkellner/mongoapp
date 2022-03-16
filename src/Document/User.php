@@ -57,6 +57,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
 
+    public function getProfile(): Profile {return $this->profile; }
+
     
     /** Add a Product to the Products ArrayCollection */
     public function addProduct(Product $product): void

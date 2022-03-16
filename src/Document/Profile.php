@@ -30,7 +30,7 @@ class Profile
     public function setLastname($lastname): ?self { $this->lastname = $lastname; return $this; }
 
 
-    public function setSecondEmail($second_email): ?self { $this->second_email = $second_email; return $this; }
+    public function setSecondEmail($secondEmail): ?self { $this->second_email = $secondEmail; return $this; }
 
    
     public function getFirstname(): string { return $this->firstname; }

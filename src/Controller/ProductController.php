@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Document\User;
 use App\Document\Product;
-use App\Form\ProductType;
+use App\Form\Type\ProductType;
 use App\Service\FileUploader;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;

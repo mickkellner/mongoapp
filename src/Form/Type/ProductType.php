@@ -1,5 +1,5 @@
 <?php
-namespace App\Form;
+namespace App\Form\Type;
 
 use App\Document\Product;
 use App\Form\EventListener\AddNameFieldSubscriber;

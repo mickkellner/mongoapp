@@ -3,8 +3,7 @@
 namespace App\Controller;
 
 use App\Document\Profile;
-use App\Document\User;
-use App\Form\ProfileType;
+use App\Document\Type\ProfileType;
 use App\Repository\UserRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;

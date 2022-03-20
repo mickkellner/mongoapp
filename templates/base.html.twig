@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+            
+            {{ include('_includes/navbar.html.twig') }}
+            
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+                {# read and display all flash messages #}
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="flash-{{ label }} alert alert-dark" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}   
+
+    </head>
+    <body class="text-white bg-dark">
+      
+        {% block body %}
+            
+
+            
+
+
+        {% endblock %}
+        
+    </body>
+</html>

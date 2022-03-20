@@ -1,0 +1,21 @@
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-black" id="productModalLabel">Produkt bearbeiten</h5>
+        {# <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> #}
+      </div>
+      <div class="modal-body">
+       {{ form_start(form, {'method': 'POST'}) }}
+
+       {# <input class="form-control text-black" type="text" label="Name" id="name" value=""/>
+       <input class="form-control text-black" type="text" label="Cover" id="cover" value=""/>
+       <input class="form-control text-black" type="text" label="Preis" id="price" value =""/> #}
+      </div>
+      <div class="modal-footer">
+        <button type="cancel" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+        <button type="submit" class="btn btn-primary">Speichern</button>
+
+        {{ form_end(form) }}
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+
+        <div class="col"></div>
+
+        <div class="col-4">
+            {{ form_start(form) }}
+                {{ form_errors(form) }}
+
+                {{ form_row(form.name, {'value': product.name}) }}
+                {{ form_row(form.cover,{'value': product.cover}) }}
+                {{ form_row(form.price,{'value': product.price}) }}
+
+                {{ form_row(form.submit, { 'label': 'Speichern' }) }}
+            {{ form_end(form) }}
+        </div>
+
+        <div class="col"></div>
+
+    </div>
+</div>
+{% endblock %}

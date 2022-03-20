@@ -1,0 +1,33 @@
+
+ <table class="table table-dark table-hover">
+    <tr>
+        <th>Name</th>
+        <th>Cover</th>
+        <th>Preis</th>
+        <th>Aktionen</th> 
+    </tr>
+    {% for product in products %}
+      <form id="product_form" class="form-control" action="{{ path('product_edit', {productId: product.id })}}" enctype="multipart/form-data">
+        <tr>
+          <td id="name" value="{{product.name}}">{{product.name}}</td>
+          <td id="name" value="{{product.cover}}">
+              <a href="{{ asset('uploads/covers/' ~ product.cover) }}">Cover anzeigen</a>
+          </td>              
+          <td id="name" value="{{product.price}}">{{product.price}}</td>
+          <td>
+          <input type="hidden" id="productId" value="{{product.id}}"/>                           
+          <input type="submit" id="submit" value="Ändern" class="btn btn-primary">
+          </td>
+                  
+      </form>
+                <td>
+                  <a href="{{ path('product_delete', {productId: product.id})}}" class="btn btn-primary">Löschen</a>
+                </td>          
+              
+          </tr>
+       
+    
+  {% endfor %}
+ 
+    
+</table> 

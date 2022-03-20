@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+
+        <div class="col"></div>
+
+        <div class="col-9">         
+                                           
+            {{ include('_includes/product_list.html.twig') }}
+           {#  {{ user.email }}
+             {{ user.products }} #}
+        </div>
+
+        <div class="col"></div>
+
+    </div>
+</div>
+{% endblock %}

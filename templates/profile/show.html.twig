@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit user{% endblock %}
+{% block title %}Profildaten hinzufügen{% endblock %}
 
 {% block body %}
 <div class="container">
@@ -32,7 +32,11 @@
                     </tr>
                     <tr>                    
                     <td>2. Email</td>
-                    <td>{{ user.profile.secondEmail }}</td>                    
+                    <td>{{ user.profile.secondEmail }}</td>                                       
+                    </tr>
+                    <tr>
+                     <td></td>
+                     <td><a class="btn btn-primary" href="{{ path('profile_add') }}" role="button">Profil bearbeiten</a> 
                     </tr>                    
                 </tbody>
                 </table>

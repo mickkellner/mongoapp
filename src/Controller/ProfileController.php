@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+
 class ProfileController extends AbstractController
 {
     
@@ -27,10 +28,13 @@ class ProfileController extends AbstractController
     #[Route('/profile/add', name: 'profile_add')]
     public function add(Request $request): Response
     {
-        $profile = new Profile();
+        $user = $this->getUser();
+        $profile = $user->getProfile();
+        
         $form = $this->createForm(ProfileType::class, $profile);
         $form->handleRequest($request);
-        $user = $this->getUser();        
+        
+        
         if($form->isSubmitted() && $form->isValid() )
         {            
             $profile = $form->getData();            
@@ -44,8 +48,9 @@ class ProfileController extends AbstractController
             $this->addFlash('success', 'Die Profildaten wurden gespeichert!');            
             return $this->redirectToRoute('app_home');
         }       
-        return $this->render('profile/index.html.twig', [
+        return $this->render('profile/add.html.twig', [
             'profile_form' => $form->createView(),
+            'user' => $user,
         ]);
     }
 
@@ -53,11 +58,11 @@ class ProfileController extends AbstractController
     #[Route('/profile/show', name: 'profile_show')]
     public function show(): Response
     {   
-        $userProfile = $this->getUser();
+        $profile = $this->getUser();
         //dd($userProfile);
         
         return $this->render('profile/show.html.twig', [
-            'user' => $userProfile,
+            'user' => $profile,
         ]);
     }
 }

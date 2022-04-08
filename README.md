@@ -4,6 +4,7 @@ first steps using Symfony 6 und MongoDB. Just for understanding the framework an
 
 Content:
 - User Login with Security Bundle
+- Registration Form /register 
 - Admin or User Roles
 - User cann add a Product with name and price
 - Cover Image can be uploaded for the product

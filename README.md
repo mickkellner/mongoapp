@@ -6,6 +6,7 @@ Content:
 - User Login with Security Bundle
 - Admin or User Roles
 - User cann add a Product with name and price
+- Cover Image can be uploaded for the product
 - Product List
 - Edit a Product
 - Add additional profile data (optional) Embedded Document used

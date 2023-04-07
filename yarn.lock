@@ -5913,7 +5913,6 @@ __metadata:
     regenerator-runtime: ^0.13.2
     sass: ^1.49.9
     sass-loader: ^12.6.0
-    webpack: ^5.0.0
     webpack-notifier: ^1.6.0
   peerDependencies:
     webpack: "*"
@@ -6907,7 +6906,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.0.0, webpack@npm:^5.35":
+"webpack@npm:^5.35":
   version: 5.69.1
   resolution: "webpack@npm:5.69.1"
   dependencies:
